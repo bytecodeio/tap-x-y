@@ -1,0 +1,180 @@
+{
+    "type": ["null", "object"],
+    "additionalProperties": true,
+    "properties": {                
+        "customerFullName": {
+            "type": ["null", "string"]
+        },
+        "charges/authorized": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "amount": {
+                    "type": ["null", "integer"]
+                },
+                "currency": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "itemQty": {
+            "type": ["null", "integer"]
+        },
+        "charges/paid": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "amount": {
+                    "type": ["null", "integer"]
+                },
+                "currency": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "charges/due": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "amount": {
+                    "type": ["null", "integer"]
+                },
+                "currency": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "workflowStatus": {
+            "type": ["null", "string"]
+        },
+        "charges/taxes": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "amount": {
+                    "type": ["null", "integer"]
+                },
+                "currency": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "type": {
+            "type": ["null", "string"]
+        },
+        "fulfillmentStatus": {
+            "type": ["null", "string"]
+        },
+        "customerPhone": {
+            "type": ["null", "string"]
+        },
+        "charges/netAmount": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "amount": {
+                    "type": ["null", "integer"]
+                },
+                "currency": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "charges/shipping": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "amount": {
+                    "type": ["null", "integer"]
+                },
+                "currency": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "customerEmail": {
+            "type": ["null", "string"]
+        },
+        "customerLastName": {
+            "type": ["null", "string"]
+        },
+        "id": {
+            "type": ["null", "string"]
+        },
+        "charges/currency": {
+            "type": ["null", "string"]
+        },
+        "paymentStatus": {
+            "type": ["null", "string"]
+        },
+        "charges/discount": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "amount": {
+                    "type": ["null", "integer"]
+                },
+                "currency": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "charges/promotion": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "amount": {
+                    "type": ["null", "integer"]
+                },
+                "currency": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "charges/amount": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "amount": {
+                    "type": ["null", "integer"]
+                },
+                "currency": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "customerFirstName": {
+            "type": ["null", "string"]
+        },
+        "channelName": {
+            "type": ["null", "string"]
+        },
+        "charges/charges": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "amount": {
+                    "type": ["null", "integer"]
+                },
+                "currency": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "orderDate": {
+            "type": ["null", "integer"]
+        },
+        "charges/total": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "amount": {
+                    "type": ["null", "integer"]
+                },
+                "currency": {
+                    "type": ["null", "string"]
+                }
+            }
+        }
+    }
+}

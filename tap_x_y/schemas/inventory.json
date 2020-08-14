@@ -1,0 +1,129 @@
+{
+    "type": ["null", "object"],
+    "additionalProperties": true,
+    "properties": {        
+        "item": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "$uri": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "available-price": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "amount": {
+                    "type": ["null", "integer"]
+                },
+                "currency": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "consigned-msrp": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "amount": {
+                    "type": ["null", "integer"]
+                },
+                "currency": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "available": {
+            "type": ["null", "integer"]
+        },
+        "held-msrp": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "amount": {
+                    "type": ["null", "integer"]
+                },
+                "currency": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "store": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "$uri": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "onHand-msrp": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "amount": {
+                    "type": ["null", "integer"]
+                },
+                "currency": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "onHand-price": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "amount": {
+                    "type": ["null", "integer"]
+                },
+                "currency": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "onHand": {
+            "type": ["null", "string"]
+        },
+        "consigned-price": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "amount": {
+                    "type": ["null", "integer"]
+                },
+                "currency": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "available-msrp": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "amount": {
+                    "type": ["null", "integer"]
+                },
+                "currency": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "currency": {
+            "type": ["null", "string"]
+        },
+        "held-price": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "amount": {
+                    "type": ["null", "integer"]
+                },
+                "currency": {
+                    "type": ["null", "string"]
+                }
+            }
+        }
+    }
+}

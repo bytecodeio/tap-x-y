@@ -1,11 +1,11 @@
 import os
+from datetime import datetime, timedelta
 
 import humps
 import singer
 import singer.metrics
-from singer import metrics, metadata, Transformer, utils
+from singer import Transformer, metadata, metrics, utils
 from singer.utils import strptime_to_utc
-from datetime import timedelta, datetime
 
 LOGGER = singer.get_logger()
 
@@ -18,6 +18,7 @@ class Base:
         self.state = state
         self.top = 50
         self.date_window_size = 1
+        self.size = 100
 
     @staticmethod
     def get_abs_path(path):
@@ -62,14 +63,41 @@ class Base:
         max_key = max(date_times)
         return date_times[max_key]
 
-    def sync(self, mdata):
-        resources = self.client.get_all_resources(self.version,
-                                                  self.endpoint,
-                                                  top=self.top,
-                                                  orderby=self.orderby)
+    def get_resources_by_date(self, date):
+        if self.replication_key:
+            filter_param = {
+                self.replication_key + '.filter': int(date.timestamp()) * 1000
+            }
+        return self.client.get_resources(self.get_endpoint(), filter_param)
 
-        transformed_resources = humps.decamelize(resources)
-        yield resources
+    def get_resources(self):
+        return self.client.get_resources(self.get_endpoint())
+
+    def sync(self, mdata):
+        schema = self.load_schema()
+
+        with singer.metrics.job_timer(job_type=self.name) as timer:
+            with singer.metrics.record_counter(endpoint=self.name) as counter:
+
+                if self.replication_key:
+
+                    bookmark_date = self.get_bookmark(
+                        self.name, self.config.get('start_date'))
+                    today = utils.now()
+
+                    date_window_start = strptime_to_utc(bookmark_date)
+
+                    data = []
+                    while date_window_start <= today:
+                        result = self.get_resources_by_date(date_window_start)
+                        date_window_start = date_window_start + timedelta(
+                            days=self.date_window_size)
+                        data.extend(result)
+                    yield data
+                
+                else:
+                    yield self.get_resources()
+
 
 class CommerceSalesOrderline(Base):
     name = 'commerce_salesorderline'
@@ -78,37 +106,91 @@ class CommerceSalesOrderline(Base):
     replication_key = 'orderDate'
     endpoint = 'commerce.salesorderline-{salesorderline}'
     valid_replication_keys = ['orderDate']
-    size = 100
 
-    def get_by_date(self, date):
-        filter_param = {
-            self.replication_key + '.filter': int(date.timestamp()) * 1000
-        }
-        return self.client.get_resources(self.endpoint.format(salesorderline=self.config.get('salesorderline')), filter_param)
+    def get_endpoint(self):
+        return self.endpoint.format(
+            salesorderline=self.config.get('salesorderline'))
 
-    def sync(self, mdata):
-        schema = self.load_schema()
 
-        # pylint: disable=unused-variable
-        with singer.metrics.job_timer(job_type=self.name) as timer:
-            with singer.metrics.record_counter(endpoint=self.name) as counter:
+class Customer(Base):
+    name = 'customer'
+    key_properties = ['email']
+    replication_method = 'INCREMENTAL'
+    replication_key = 'lastTxnDate'
+    endpoint = '{customer}'
+    valid_replication_keys = ['lastTxnDate']
 
-                bookmark_date = self.get_bookmark(self.name, self.config.get('start_date'))
-                today = utils.now()
+    def get_endpoint(self):
+        return self.endpoint.format(customer=self.config.get('customer'))
 
-                # Window the requests based on the tap configuration
-                date_window_start = strptime_to_utc(bookmark_date)
 
-                data = []
-                while date_window_start <= today:
-                    result = self.get_by_date(date_window_start)
-                    date_window_start = date_window_start + timedelta(
-                                days=self.date_window_size)
-                    data.extend(result)
-                yield data
+class Inventory(Base):
+    name = 'inventory'
+    key_properties = ['item']
+    replication_method = 'FULL_TABLE'
+    endpoint = 'commerce.inventory-{inventory}'
+    replication_key = None
+    valid_replication_keys = ['']
 
-                    
+    def get_endpoint(self):
+        return self.endpoint.format(inventory=self.config.get('inventory'))
+
+
+class Invoice(Base):
+    name = 'invoice'
+    key_properties = ['id']
+    replication_method = 'INCREMENTAL'
+    replication_key = 'orderDate'
+    endpoint = '{invoice}'
+    valid_replication_keys = ['orderDate']
+
+    def get_endpoint(self):
+        return self.endpoint.format(invoice=self.config.get('invoice'))
+
+
+class InventoryMovement(Base):
+    name = 'inventory_movement'
+    key_properties = ['id']
+    replication_method = 'INCREMENTAL'
+    replication_key = 'date'
+    endpoint = '{inventory_movement}'
+    valid_replication_keys = ['date']
+
+    def get_endpoint(self):
+        return self.endpoint.format(
+            inventory_movement=self.config.get('inventory_movement'))
+
+class Item(Base):
+    name = 'item'
+    key_properties = ['id']
+    replication_method = 'FULL_TABLE'
+    endpoint = 'commerce.item-{item}'
+    replication_key = None
+    valid_replication_keys = ['']
+
+    def get_endpoint(self):
+        return self.endpoint.format(item=self.config.get('item'))
+
+
+class StockTransfer(Base):
+    name = 'stock_transfer'
+    key_properties = ['item']
+    replication_method = 'INCREMENTAL'
+    replication_key = 'date'
+    endpoint = 'commerce.stocktransferline-{stock_transfer}'
+    valid_replication_keys = ['date']
+
+    def get_endpoint(self):
+        return self.endpoint.format(
+            stock_transfer=self.config.get('stock_transfer'))
+
 
 AVAILABLE_STREAMS = {
-    "commerce_salesorderline": CommerceSalesOrderline
+    "commerce_salesorderline": CommerceSalesOrderline,
+    "customer": Customer,
+    "inventory": Inventory,
+    "invoice": Invoice,
+    "inventory_movement": InventoryMovement,
+    "item": Item,
+    "stock_transfer": StockTransfer
 }
