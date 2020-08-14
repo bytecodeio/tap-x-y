@@ -119,11 +119,9 @@ class Customer(Base):
 
 class Inventory(Base):
     name = 'inventory'
-    key_properties = ['email']
-    replication_method = 'INCREMENTAL'
-    replication_key = 'lastTxnDate'
+    key_properties = ['item']
+    replication_method = 'FULL_TABLE'
     endpoint = 'commerce.inventory-{inventory}'
-    valid_replication_keys = ['lastTxnDate']
 
     def get_endpont(self):
         return self.endpoint.format(inventory=self.config.get('inventory'))
@@ -145,14 +143,13 @@ class InventoryMovement(Base):
     name = 'inventory_movement'
     key_properties = ['id']
     replication_method = 'INCREMENTAL'
-    replication_key = 'orderDate'
+    replication_key = 'date'
     endpoint = '{inventory_movement}'
-    valid_replication_keys = ['orderDate']
+    valid_replication_keys = ['date']
 
     def get_endpoint(self):
         return self.endpoint.format(
             inventory_movement=self.config.get('inventory_movement'))
-
 
 class Item(Base):
     name = 'item'
