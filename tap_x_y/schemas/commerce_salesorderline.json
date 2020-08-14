@@ -1,0 +1,219 @@
+{
+    "type": ["null", "object"],
+    "additionalProperties": true,
+    "properties": {
+        "revenueReport/reportDate": {
+            "type": ["null", "string"]
+        },
+        "charges/paid": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "amount": {
+                    "type": ["null", "integer"]
+                },
+                "currency": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "color": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "$uri": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "itemCategory": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "$uri": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "channel": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "$uri": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "charges/taxes": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "amount": {
+                    "type": ["null", "integer"]
+                },
+                "currency": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "channelType": {
+            "type": ["null", "string"]
+        },
+        "shipToLineCity": {
+            "type": ["null", "string"]
+        },
+        "division": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "$uri": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "itemSubCategory": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "$uri": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "sku": {
+            "type": ["null", "string"]
+        },
+        "charges/currency": {
+            "type": ["null", "string"]
+        },
+        "order": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "$uri": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "item": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "$uri": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "quantity": {
+            "type": ["null", "integer"]
+        },
+        "deliveryType": {
+            "type": ["null", "string"]
+        },
+        "charges/netAmountBeforeTax": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "amount": {
+                    "type": ["null", "integer"]
+                },
+                "currency": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "upc": {
+            "type": ["null", "string"]
+        },
+        "collection": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "$uri": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "charges/promotion": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "amount": {
+                    "type": ["null", "integer"]
+                },
+                "currency": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "itemImage": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "$uri": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "pointOfSale": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "$uri": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "size": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "$uri": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "fulfillmentLocation": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "$uri": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "style": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "$uri": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "orderDate": {
+            "type": ["null", "number"]
+        },
+        "charges/total": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "amount": {
+                    "type": ["null", "integer"]
+                },
+                "currency": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "customer": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "$uri": {
+                    "type": ["null", "string"]
+                }
+            }
+        }
+    }
+}
