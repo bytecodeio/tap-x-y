@@ -64,9 +64,10 @@ class Base:
         return date_times[max_key]
 
     def get_by_date(self, date):
-        filter_param = {
-            self.replication_key + '.filter': int(date.timestamp()) * 1000
-        }
+        if self.replication_key:
+            filter_param = {
+                self.replication_key + '.filter': int(date.timestamp()) * 1000
+            }
         return self.client.get_resources(self.get_endpoint(), filter_param)
 
     def sync(self, mdata):
