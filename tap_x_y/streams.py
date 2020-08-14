@@ -18,6 +18,7 @@ class Base:
         self.state = state
         self.top = 50
         self.date_window_size = 1
+        self.size = 100
 
     @staticmethod
     def get_abs_path(path):
@@ -62,29 +63,9 @@ class Base:
         max_key = max(date_times)
         return date_times[max_key]
 
-    def sync(self, mdata):
-        resources = self.client.get_all_resources(self.version,
-                                                  self.endpoint,
-                                                  top=self.top,
-                                                  orderby=self.orderby)
-
-        transformed_resources = humps.decamelize(resources)
-        yield resources
-
-class CommerceSalesOrderline(Base):
-    name = 'commerce_salesorderline'
-    key_properties = ['order']
-    replication_method = 'INCREMENTAL'
-    replication_key = 'orderDate'
-    endpoint = 'commerce.salesorderline-{salesorderline}'
-    valid_replication_keys = ['orderDate']
-    size = 100
-
     def get_by_date(self, date):
-        filter_param = {
-            self.replication_key + '.filter': int(date.timestamp()) * 1000
-        }
-        return self.client.get_resources(self.endpoint.format(salesorderline=self.config.get('salesorderline')), filter_param)
+        filter_param = {self.replication_key + '.filter': int(date.timestamp()) * 1000}
+        return self.client.get_resources(self.get_endpoint(), filter_param)
 
     def sync(self, mdata):
         schema = self.load_schema()
@@ -106,9 +87,88 @@ class CommerceSalesOrderline(Base):
                                 days=self.date_window_size)
                     data.extend(result)
                 yield data
+class CommerceSalesOrderline(Base):
+    name = 'commerce_salesorderline'
+    key_properties = ['order']
+    replication_method = 'INCREMENTAL'
+    replication_key = 'orderDate'
+    endpoint = 'commerce.salesorderline-{salesorderline}'
+    valid_replication_keys = ['orderDate']
 
-                    
+    def get_endpoint(self):
+        return self.endpoint.format(salesorderline=self.config.get('salesorderline'))
+
+class Customer(Base):
+    name = 'customer'
+    key_properties = ['email']
+    replication_method = 'INCREMENTAL'
+    replication_key = 'lastTxnDate'
+    endpoint = '{customer}'
+    valid_replication_keys = ['lastTxnDate']
+
+    def get_endpoint(self):
+        return self.endpoint.format(customer=self.config.get('customer'))
+
+class Inventory(Base):
+    name = 'inventory'
+    key_properties = ['email']
+    replication_method = 'INCREMENTAL'
+    replication_key = 'lastTxnDate'
+    endpoint = 'commerce.inventory-{inventory}'
+    valid_replication_keys = ['lastTxnDate']
+
+    def get_endpont(self):
+        return self.endpoint.format(inventory=self.config.get('inventory'))
+class Invoice(Base):
+    name = 'invoice'
+    key_properties = ['id']
+    replication_method = 'INCREMENTAL'
+    replication_key = 'orderDate'
+    endpoint = '{invoice}'
+    valid_replication_keys = ['orderDate']
+
+    def get_endpoint(self):
+        return self.endpoint.format(invoice=self.config.get('invoice'))
+
+class InventoryMovement(Base):
+    name = 'inventory_movement'
+    key_properties = ['id']
+    replication_method = 'INCREMENTAL'
+    replication_key = 'orderDate'
+    endpoint = '{inventory_movement}'
+    valid_replication_keys = ['orderDate']
+
+    def get_endpoint(self):
+        return self.endpoint.format(inventory_movement=self.config.get('inventory_movement'))
+
+class Item(Base):
+    name = 'item'
+    key_properties = ['id']
+    replication_method = 'FULL_TABLE'
+    replication_key = 'orderDate'
+    endpoint = 'commerce.item-{item}'
+    valid_replication_keys = ['orderDate']
+
+    def get_endpoint(self):
+        return self.endpoint.format(item=self.config.get('item'))
+
+class StockTransfer(Base):
+    name = 'stock_transfer'
+    key_properties = ['item']
+    replication_method = 'INCREMENTAL'
+    replication_key = 'date'
+    endpoint = 'commerce.stocktransferline-{stock_transfer}'
+    valid_replication_keys = ['date']
+
+    def get_endpoint(self):
+        return self.endpoint.format(stock_transfer=self.config.get('stock_transfer'))
 
 AVAILABLE_STREAMS = {
-    "commerce_salesorderline": CommerceSalesOrderline
+    "commerce_salesorderline": CommerceSalesOrderline,
+    "customer": Customer,
+    "inventory": Inventory,
+    "invoice": Invoice,
+    "inventory_movement": InventoryMovement,
+    "item": Item,
+    "stock_transfer": StockTransfer
 }

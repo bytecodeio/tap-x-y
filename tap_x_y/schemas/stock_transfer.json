@@ -1,0 +1,66 @@
+{
+    "type": ["null", "object"],
+    "additionalProperties": true,
+    "properties": {       
+        "date": {
+            "type": ["null", "number"]
+        },
+        "transferOut": {
+            "type": ["null", "integer"]
+        },
+        "item": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "$uri": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "quantity": {
+            "type": ["null", "integer"]
+        },
+        "transferredOutOn": {
+            "type": ["null", "number"]
+        },
+        "fromLocation": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "$uri": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "transferredOutBy": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "$uri": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "toLocation": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "$uri": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "stocktransfer": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "$uri": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "status": {
+            "type": ["null", "string"]
+        }
+    }
+}

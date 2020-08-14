@@ -1,0 +1,110 @@
+{
+    "type": ["null", "object"],
+    "additionalProperties": true,
+    "properties": {
+        "lastName": {
+            "type": ["null", "string"]
+        },
+        "country": {
+            "type": ["null", "string"]
+        },
+        "lastTxnAmount": {
+            "amount": {
+                "type": ["null", "integer"]
+            },
+            "currency": {
+                "type": ["null", "string"]
+            }
+        },
+        "city": {
+            "type": ["null", "string"]
+        },
+        "firstTxnDate": {
+            "type": ["null", "integer"]
+        },
+        "onlineSpend/charges/netAmount": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                    "amount": {
+                        "type": ["null", "integer"]
+                    },
+                    "currency": {
+                        "type": ["null", "string"]
+                    }
+            }
+        },
+        "totalSpend/aus": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "amount": {
+                    "type": ["null", "integer"]
+                },
+                "currency": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "firstName": {
+            "type": ["null", "string"]
+        },
+        "promotionSpend/charges/netAmount": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "amount": {
+                    "type": ["null", "integer"]
+                },
+                "currency": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "lastChannel": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "$uri": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "phone": {
+            "type": ["null", "string"]
+        },
+        "lastTxnDate": {
+            "type": ["null", "integer"]
+        },
+        "totalSpend/orderCount": {
+            "type": ["null", "integer"]
+        },
+        "totalSpend/netQuantity": {
+            "type": ["null", "integer"]
+        },
+        "state": {
+            "type": ["null", "string"]
+        },
+        "totalSpend/charges/netAmount": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "amount": {
+                    "type": ["null", "integer"]
+                },
+                "currency": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "email": {
+            "type": ["null", "string"]
+        },
+        "status": {
+            "type": ["null", "string"]
+        },
+        "totalSpend/soldQuantity": {
+            "type": ["null", "integer"]
+        }
+    }
+}

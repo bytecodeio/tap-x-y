@@ -1,0 +1,237 @@
+{
+    "type": ["null", "object"],
+    "additionalProperties": true,
+    "properties": {                  
+        "date": {
+            "type": ["null", "number"]
+        },
+        "applied": {
+            "type": ["null", "boolean"]
+        },
+        "consigned-msrp": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "amount": {
+                    "type": ["null", "integer"]
+                },
+                "currency": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "held": {
+            "type": ["null", "integer"]
+        },
+        "onOrder-price": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "amount": {
+                    "type": ["null", "integer"]
+                },
+                "currency": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "available": {
+            "type": ["null", "integer"]
+        },
+        "transit-price": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "amount": {
+                    "type": ["null", "integer"]
+                },
+                "currency": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "onHand-price": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "amount": {
+                    "type": ["null", "integer"]
+                },
+                "currency": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "consigned-price": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "amount": {
+                    "type": ["null", "integer"]
+                },
+                "currency": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "transit-msrp": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "amount": {
+                    "type": ["null", "integer"]
+                },
+                "currency": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "storeName": {
+            "type": ["null", "string"]
+        },
+        "held-price": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "amount": {
+                    "type": ["null", "integer"]
+                },
+                "currency": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "damaged-msrp": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "amount": {
+                    "type": ["null", "integer"]
+                },
+                "currency": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "order": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "$uri": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "item": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "$uri": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "consigned": {
+            "type": ["null", "integer"]
+        },
+        "salePrice": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "amount": {
+                    "type": ["null", "integer"]
+                },
+                "currency": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "available-price": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "amount": {
+                    "type": ["null", "integer"]
+                },
+                "currency": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "recordType": {
+            "type": ["null", "string"]
+        },
+        "held-msrp": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "amount": {
+                    "type": ["null", "integer"]
+                },
+                "currency": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "onHand-msrp": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "amount": {
+                    "type": ["null", "integer"]
+                },
+                "currency": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "onOrder-msrp": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "amount": {
+                    "type": ["null", "integer"]
+                },
+                "currency": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "onHand": {
+            "type": ["null", "integer"]
+        },
+        "transit": {
+            "type": ["null", "integer"]
+        },
+        "damaged": {
+            "type": ["null", "integer"]
+        },
+        "available-msrp": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "amount": {
+                    "type": ["null", "integer"]
+                },
+                "currency": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "onOrder": {
+            "type": ["null", "integer"]
+        },
+        "damaged-price": {
+            "type": ["null", "object"],
+            "additionalProperties": true,
+            "properties": {
+                "amount": {
+                    "type": ["null", "integer"]
+                },
+                "currency": {
+                    "type": ["null", "string"]
+                }
+            }
+        }
+    }
+}
