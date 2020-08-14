@@ -63,34 +63,40 @@ class Base:
         max_key = max(date_times)
         return date_times[max_key]
 
-    def get_by_date(self, date):
+    def get_resources_by_date(self, date):
         if self.replication_key:
             filter_param = {
                 self.replication_key + '.filter': int(date.timestamp()) * 1000
             }
         return self.client.get_resources(self.get_endpoint(), filter_param)
 
+    def get_resources(self):
+        return self.client.get_resources(self.get_endpoint())
+
     def sync(self, mdata):
         schema = self.load_schema()
 
-        # pylint: disable=unused-variable
         with singer.metrics.job_timer(job_type=self.name) as timer:
             with singer.metrics.record_counter(endpoint=self.name) as counter:
 
-                bookmark_date = self.get_bookmark(
-                    self.name, self.config.get('start_date'))
-                today = utils.now()
+                if self.replication_key:
 
-                # Window the requests based on the tap configuration
-                date_window_start = strptime_to_utc(bookmark_date)
+                    bookmark_date = self.get_bookmark(
+                        self.name, self.config.get('start_date'))
+                    today = utils.now()
 
-                data = []
-                while date_window_start <= today:
-                    result = self.get_by_date(date_window_start)
-                    date_window_start = date_window_start + timedelta(
-                        days=self.date_window_size)
-                    data.extend(result)
-                yield data
+                    date_window_start = strptime_to_utc(bookmark_date)
+
+                    data = []
+                    while date_window_start <= today:
+                        result = self.get_resources_by_date(date_window_start)
+                        date_window_start = date_window_start + timedelta(
+                            days=self.date_window_size)
+                        data.extend(result)
+                    yield data
+                
+                else:
+                    yield self.get_resources()
 
 
 class CommerceSalesOrderline(Base):
@@ -123,9 +129,10 @@ class Inventory(Base):
     key_properties = ['item']
     replication_method = 'FULL_TABLE'
     endpoint = 'commerce.inventory-{inventory}'
+    replication_key = None
     valid_replication_keys = ['']
 
-    def get_endpont(self):
+    def get_endpoint(self):
         return self.endpoint.format(inventory=self.config.get('inventory'))
 
 
@@ -158,6 +165,7 @@ class Item(Base):
     key_properties = ['id']
     replication_method = 'FULL_TABLE'
     endpoint = 'commerce.item-{item}'
+    replication_key = None
     valid_replication_keys = ['']
 
     def get_endpoint(self):

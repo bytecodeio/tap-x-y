@@ -22,7 +22,7 @@ class XYClient:
         url_parts[4] = urllib.parse.urlencode(args_dict)
         return urllib.parse.urlunparse(url_parts)
 
-    def get_resources(self, path, filter_param):
+    def get_resources(self, path, filter_param=None):
         page_from = 0
         total = 1
 
@@ -30,7 +30,8 @@ class XYClient:
             'size': 100,
             'from': page_from
         }
-        args = {**args, **filter_param}
+        if filter_param:
+            args = {**args, **filter_param}
 
         next = self.build_url(BASE_URL, path, args)
 
@@ -42,7 +43,7 @@ class XYClient:
             data.extend(response.get('rows'))
             rows_in_response = len(response.get('rows'))
             page_from += PAGE_SIZE
-            args['from'] = page_from + 101
+            args['from'] = page_from + 100
             args['total'] = total
             next = self.build_url(BASE_URL, path, args)
         return data
