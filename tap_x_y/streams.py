@@ -123,6 +123,7 @@ class Inventory(Base):
     key_properties = ['item']
     replication_method = 'FULL_TABLE'
     endpoint = 'commerce.inventory-{inventory}'
+    valid_replication_keys = ['']
 
     def get_endpont(self):
         return self.endpoint.format(inventory=self.config.get('inventory'))
@@ -157,6 +158,7 @@ class Item(Base):
     key_properties = ['id']
     replication_method = 'FULL_TABLE'
     endpoint = 'commerce.item-{item}'
+    valid_replication_keys = ['']
 
     def get_endpoint(self):
         return self.endpoint.format(item=self.config.get('item'))
