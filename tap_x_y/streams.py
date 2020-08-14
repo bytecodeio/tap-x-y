@@ -1,11 +1,11 @@
 import os
+from datetime import datetime, timedelta
 
 import humps
 import singer
 import singer.metrics
-from singer import metrics, metadata, Transformer, utils
+from singer import Transformer, metadata, metrics, utils
 from singer.utils import strptime_to_utc
-from datetime import timedelta, datetime
 
 LOGGER = singer.get_logger()
 
@@ -64,7 +64,9 @@ class Base:
         return date_times[max_key]
 
     def get_by_date(self, date):
-        filter_param = {self.replication_key + '.filter': int(date.timestamp()) * 1000}
+        filter_param = {
+            self.replication_key + '.filter': int(date.timestamp()) * 1000
+        }
         return self.client.get_resources(self.get_endpoint(), filter_param)
 
     def sync(self, mdata):
@@ -74,7 +76,8 @@ class Base:
         with singer.metrics.job_timer(job_type=self.name) as timer:
             with singer.metrics.record_counter(endpoint=self.name) as counter:
 
-                bookmark_date = self.get_bookmark(self.name, self.config.get('start_date'))
+                bookmark_date = self.get_bookmark(
+                    self.name, self.config.get('start_date'))
                 today = utils.now()
 
                 # Window the requests based on the tap configuration
@@ -84,9 +87,11 @@ class Base:
                 while date_window_start <= today:
                     result = self.get_by_date(date_window_start)
                     date_window_start = date_window_start + timedelta(
-                                days=self.date_window_size)
+                        days=self.date_window_size)
                     data.extend(result)
                 yield data
+
+
 class CommerceSalesOrderline(Base):
     name = 'commerce_salesorderline'
     key_properties = ['order']
@@ -96,7 +101,9 @@ class CommerceSalesOrderline(Base):
     valid_replication_keys = ['orderDate']
 
     def get_endpoint(self):
-        return self.endpoint.format(salesorderline=self.config.get('salesorderline'))
+        return self.endpoint.format(
+            salesorderline=self.config.get('salesorderline'))
+
 
 class Customer(Base):
     name = 'customer'
@@ -109,6 +116,7 @@ class Customer(Base):
     def get_endpoint(self):
         return self.endpoint.format(customer=self.config.get('customer'))
 
+
 class Inventory(Base):
     name = 'inventory'
     key_properties = ['email']
@@ -119,6 +127,8 @@ class Inventory(Base):
 
     def get_endpont(self):
         return self.endpoint.format(inventory=self.config.get('inventory'))
+
+
 class Invoice(Base):
     name = 'invoice'
     key_properties = ['id']
@@ -130,6 +140,7 @@ class Invoice(Base):
     def get_endpoint(self):
         return self.endpoint.format(invoice=self.config.get('invoice'))
 
+
 class InventoryMovement(Base):
     name = 'inventory_movement'
     key_properties = ['id']
@@ -139,18 +150,19 @@ class InventoryMovement(Base):
     valid_replication_keys = ['orderDate']
 
     def get_endpoint(self):
-        return self.endpoint.format(inventory_movement=self.config.get('inventory_movement'))
+        return self.endpoint.format(
+            inventory_movement=self.config.get('inventory_movement'))
+
 
 class Item(Base):
     name = 'item'
     key_properties = ['id']
     replication_method = 'FULL_TABLE'
-    replication_key = 'orderDate'
     endpoint = 'commerce.item-{item}'
-    valid_replication_keys = ['orderDate']
 
     def get_endpoint(self):
         return self.endpoint.format(item=self.config.get('item'))
+
 
 class StockTransfer(Base):
     name = 'stock_transfer'
@@ -161,7 +173,9 @@ class StockTransfer(Base):
     valid_replication_keys = ['date']
 
     def get_endpoint(self):
-        return self.endpoint.format(stock_transfer=self.config.get('stock_transfer'))
+        return self.endpoint.format(
+            stock_transfer=self.config.get('stock_transfer'))
+
 
 AVAILABLE_STREAMS = {
     "commerce_salesorderline": CommerceSalesOrderline,
