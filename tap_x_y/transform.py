@@ -46,30 +46,28 @@ def convert_json(this_json):
     return out
 
 
-def denest(this_json, data_key, denest_keys):
-    """Denest by path and key. Moves all elements at key to parent level if
-    no target provided. Target provided by dot syntax, e.g. key.target.
-    Arguments:
-        this_json {[type]} -- [description]
-        data_key {[type]} -- [description]
-        denest_keys {[type]} -- [description]
-    Raises:
-        AssertionException: If denested key exists in parent.
-    Returns:
-        json -- Transformed json with denested keys.
-    """
-    new_json = this_json
+def denest(this_json):
+    new_json = {}
     index = 0
-    for record in list(this_json.get(data_key, [])):
-        for denest_key in denest_keys.split(","):
-            if "." in denest_key:
-                denest_targeted_nodes(
-                    index, data_key, record, new_json, denest_key)
+    if isinstance(this_json, dict):
+        for key, value in this_json.items():
+            if isinstance(this_json[key], dict):
+                for child_key, child_value in this_json[key].items():
+                    if child_key == '$uri':
+                        new_key = key
+                    else:
+                        new_key = key + '_' + child_key
+                    new_json[new_key]= child_value
             else:
-                denest_node_all_elements(
-                    index, record, denest_key, data_key, new_json)
-        index = index + 1
+                new_json[key] = value
+    elif isinstance(this_json, list):
+        for item in this_json:
+            denest(item)
+        
     return new_json
 
 def transform(this_json):
-    return convert_json(this_json)
+    snake = convert_json(this_json)
+    denested = [denest(nested) for nested in snake]
+    # denested = denest(snake)
+    return convert_json(denested)
