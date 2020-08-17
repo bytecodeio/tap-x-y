@@ -2,100 +2,68 @@
     "type": ["null", "object"],
     "additionalProperties": true,
     "properties": {
-        "lastName": {
+        "last_name": {
             "type": ["null", "string"]
         },
         "country": {
             "type": ["null", "string"]
         },
-        "lastTxnAmount": {
-            "amount": {
-                "type": ["null", "integer"]
-            },
-            "currency": {
+        "last_txn_amount_amount": {
+            "type": ["null", "integer"]
+        },
+        "last_txn_amount_currency": {
                 "type": ["null", "string"]
-            }
         },
         "city": {
             "type": ["null", "string"]
         },
-        "firstTxnDate": {
+        "first_txn_date": {
             "type": ["null", "integer"]
         },
-        "onlineSpend/charges/netAmount": {
-            "type": ["null", "object"],
-            "additionalProperties": true,
-            "properties": {
-                    "amount": {
-                        "type": ["null", "integer"]
-                    },
-                    "currency": {
-                        "type": ["null", "string"]
-                    }
-            }
+        "online_spend_charges_net_amount": {
+            "type": ["null", "integer"]
         },
-        "totalSpend/aus": {
-            "type": ["null", "object"],
-            "additionalProperties": true,
-            "properties": {
-                "amount": {
-                    "type": ["null", "integer"]
-                },
-                "currency": {
-                    "type": ["null", "string"]
-                }
-            }
-        },
-        "firstName": {
+        "online_spend_charges_net_currency": {
             "type": ["null", "string"]
         },
-        "promotionSpend/charges/netAmount": {
-            "type": ["null", "object"],
-            "additionalProperties": true,
-            "properties": {
-                "amount": {
-                    "type": ["null", "integer"]
-                },
-                "currency": {
-                    "type": ["null", "string"]
-                }
-            }
+        "total_spend_aus_amount": {
+            "type": ["null", "integer"]
         },
-        "lastChannel": {
-            "type": ["null", "object"],
-            "additionalProperties": true,
-            "properties": {
-                "$uri": {
-                    "type": ["null", "string"]
-                }
-            }
+        "total_spend_aus_currency": {
+            "type": ["null", "string"]
+        },
+        "first_name": {
+            "type": ["null", "string"]
+        },
+        "promotion_spend_charges_net_amount_amount": {
+            "type": ["null", "integer"]
+        },
+        "promotion_spend_charges_net_amount_currency": {
+            "type": ["null", "string"]
+        },
+        "last_channel": {
+            "type": ["null", "string"]
         },
         "phone": {
             "type": ["null", "string"]
         },
-        "lastTxnDate": {
+        "last_txn_date": {
             "type": ["null", "integer"]
         },
-        "totalSpend/orderCount": {
+        "total_spend_order_count": {
             "type": ["null", "integer"]
         },
-        "totalSpend/netQuantity": {
+        "total_spend_net_quantity": {
             "type": ["null", "integer"]
         },
         "state": {
             "type": ["null", "string"]
         },
-        "totalSpend/charges/netAmount": {
-            "type": ["null", "object"],
-            "additionalProperties": true,
-            "properties": {
-                "amount": {
-                    "type": ["null", "integer"]
-                },
-                "currency": {
-                    "type": ["null", "string"]
-                }
-            }
+        "total_spend_charges_net_amount_amount": {
+            "type": ["null", "integer"]
+        },
+        "total_spend_charges_net_amount_currency": {
+            "type": ["null", "string"]
         },
         "email": {
             "type": ["null", "string"]
@@ -103,7 +71,7 @@
         "status": {
             "type": ["null", "string"]
         },
-        "totalSpend/soldQuantity": {
+        "total_spend_sold_quantity": {
             "type": ["null", "integer"]
         }
     }

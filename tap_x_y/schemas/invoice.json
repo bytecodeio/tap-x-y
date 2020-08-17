@@ -1,180 +1,114 @@
 {
     "type": ["null", "object"],
     "additionalProperties": true,
-    "properties": {                
-        "customerFullName": {
+    "properties": {
+        "customer_full_name": {
             "type": ["null", "string"]
         },
-        "charges/authorized": {
-            "type": ["null", "object"],
-            "additionalProperties": true,
-            "properties": {
-                "amount": {
-                    "type": ["null", "integer"]
-                },
-                "currency": {
-                    "type": ["null", "string"]
-                }
-            }
-        },
-        "itemQty": {
+        "charges_authorized_amount": {
             "type": ["null", "integer"]
         },
-        "charges/paid": {
-            "type": ["null", "object"],
-            "additionalProperties": true,
-            "properties": {
-                "amount": {
-                    "type": ["null", "integer"]
-                },
-                "currency": {
-                    "type": ["null", "string"]
-                }
-            }
-        },
-        "charges/due": {
-            "type": ["null", "object"],
-            "additionalProperties": true,
-            "properties": {
-                "amount": {
-                    "type": ["null", "integer"]
-                },
-                "currency": {
-                    "type": ["null", "string"]
-                }
-            }
-        },
-        "workflowStatus": {
+        "charges_authorized_currency": {
             "type": ["null", "string"]
         },
-        "charges/taxes": {
-            "type": ["null", "object"],
-            "additionalProperties": true,
-            "properties": {
-                "amount": {
-                    "type": ["null", "integer"]
-                },
-                "currency": {
-                    "type": ["null", "string"]
-                }
-            }
+        "item_qty": {
+            "type": ["null", "integer"]
+        },
+        "charges_paid_amount": {
+            "type": ["null", "integer"]
+        },
+        "charges_paid_currency": {
+            "type": ["null", "string"]
+        },
+        "charges_due_amount": {
+            "type": ["null", "integer"]
+        },
+        "charges_due_currency": {
+            "type": ["null", "string"]
+        },
+        "workflow_status": {
+            "type": ["null", "string"]
+        },
+        "charges_taxes_amount": {
+            "type": ["null", "integer"]
+        },
+        "charges_taxes_currency": {
+            "type": ["null", "string"]
         },
         "type": {
             "type": ["null", "string"]
         },
-        "fulfillmentStatus": {
+        "fulfillment_status": {
             "type": ["null", "string"]
         },
-        "customerPhone": {
+        "customer_phone": {
             "type": ["null", "string"]
         },
-        "charges/netAmount": {
-            "type": ["null", "object"],
-            "additionalProperties": true,
-            "properties": {
-                "amount": {
-                    "type": ["null", "integer"]
-                },
-                "currency": {
-                    "type": ["null", "string"]
-                }
-            }
+        "charges_net_amount_amount": {
+            "type": ["null", "integer"]
         },
-        "charges/shipping": {
-            "type": ["null", "object"],
-            "additionalProperties": true,
-            "properties": {
-                "amount": {
-                    "type": ["null", "integer"]
-                },
-                "currency": {
-                    "type": ["null", "string"]
-                }
-            }
-        },
-        "customerEmail": {
+        "charges_net_amount_currency": {
             "type": ["null", "string"]
         },
-        "customerLastName": {
+        "charges_shipping_amount": {
+            "type": ["null", "integer"]
+        },
+        "charges_shipping_currency": {
+            "type": ["null", "string"]
+        },
+        "customer_email": {
+            "type": ["null", "string"]
+        },
+        "customer_last_name": {
             "type": ["null", "string"]
         },
         "id": {
             "type": ["null", "string"]
         },
-        "charges/currency": {
+        "charges_currency": {
             "type": ["null", "string"]
         },
-        "paymentStatus": {
+        "payment_status": {
             "type": ["null", "string"]
         },
-        "charges/discount": {
-            "type": ["null", "object"],
-            "additionalProperties": true,
-            "properties": {
-                "amount": {
-                    "type": ["null", "integer"]
-                },
-                "currency": {
-                    "type": ["null", "string"]
-                }
-            }
-        },
-        "charges/promotion": {
-            "type": ["null", "object"],
-            "additionalProperties": true,
-            "properties": {
-                "amount": {
-                    "type": ["null", "integer"]
-                },
-                "currency": {
-                    "type": ["null", "string"]
-                }
-            }
-        },
-        "charges/amount": {
-            "type": ["null", "object"],
-            "additionalProperties": true,
-            "properties": {
-                "amount": {
-                    "type": ["null", "integer"]
-                },
-                "currency": {
-                    "type": ["null", "string"]
-                }
-            }
-        },
-        "customerFirstName": {
-            "type": ["null", "string"]
-        },
-        "channelName": {
-            "type": ["null", "string"]
-        },
-        "charges/charges": {
-            "type": ["null", "object"],
-            "additionalProperties": true,
-            "properties": {
-                "amount": {
-                    "type": ["null", "integer"]
-                },
-                "currency": {
-                    "type": ["null", "string"]
-                }
-            }
-        },
-        "orderDate": {
+        "charges_discount_amount": {
             "type": ["null", "integer"]
         },
-        "charges/total": {
-            "type": ["null", "object"],
-            "additionalProperties": true,
-            "properties": {
-                "amount": {
-                    "type": ["null", "integer"]
-                },
-                "currency": {
-                    "type": ["null", "string"]
-                }
-            }
+        "charges_discount_currency": {
+            "type": ["null", "string"]
+        },
+        "charges_promotion_amount": {
+            "type": ["null", "integer"]
+        },
+        "charges_promotion_currency": {
+            "type": ["null", "string"]
+        },
+        "charges_amount_amount": {
+            "type": ["null", "integer"]
+        },
+        "charges_amount_currency": {
+            "type": ["null", "string"]
+        },
+        "customer_first_name": {
+            "type": ["null", "string"]
+        },
+        "channel_name": {
+            "type": ["null", "string"]
+        },
+        "charges_charges_amount": {
+            "type": ["null", "integer"]
+        },
+        "charges_charges_currency": {
+            "type": ["null", "string"]
+        },
+        "order_date": {
+            "type": ["null", "integer"]
+        },
+        "charges_total_amount": {
+            "type": ["null", "integer"]
+        },
+        "charges_total_currency": {
+            "type": ["null", "string"]
         }
     }
 }

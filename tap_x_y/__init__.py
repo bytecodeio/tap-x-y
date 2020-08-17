@@ -7,6 +7,7 @@ import sys
 from tap_x_y.streams import AVAILABLE_STREAMS
 from tap_x_y.client import XYClient
 from tap_x_y.catalog import generate_catalog
+from tap_x_y.transform import transform
 
 
 LOGGER = singer.get_logger()
@@ -53,18 +54,20 @@ def sync(client, config, catalog, state):
                 with singer.metrics.record_counter(
                         endpoint=stream.name) as counter:
                     for page in stream.sync(catalog_entry.metadata):
-                        for record in page:
-                            singer.write_record(
-                                catalog_entry.stream,
-                                transformer.transform(
-                                    record,
-                                    stream_schema,
-                                    stream_metadata,
-                                ))
-                            counter.increment()
-                        stream.update_bookmark(stream.name,
-                                                max_bookmark_value)
-                        stream.write_state()
+                        for records in page:
+                            transformed_records = transform(records)
+                            for transformed in transformed_records:
+                                singer.write_record(
+                                    catalog_entry.stream,
+                                    transformer.transform(
+                                        transformed,
+                                        stream_schema,
+                                        stream_metadata,
+                                    ))
+                                counter.increment()
+                            stream.update_bookmark(stream.name,
+                                                    max_bookmark_value)
+                            stream.write_state()
 
         stream.write_state()
         LOGGER.info('Finished Sync..')
