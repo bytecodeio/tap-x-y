@@ -1,63 +1,33 @@
 {
     "type": ["null", "object"],
     "additionalProperties": true,
-    "properties": {       
+    "properties": {
         "date": {
-            "type": ["null", "number"]
+            "type": ["null", "integer"]
         },
-        "transferOut": {
+        "transfer_out": {
             "type": ["null", "integer"]
         },
         "item": {
-            "type": ["null", "object"],
-            "additionalProperties": true,
-            "properties": {
-                "$uri": {
-                    "type": ["null", "string"]
-                }
-            }
+            "type": ["null", "string"]
         },
         "quantity": {
             "type": ["null", "integer"]
         },
-        "transferredOutOn": {
-            "type": ["null", "number"]
+        "transferred_out_on": {
+            "type": ["null", "integer"]
         },
-        "fromLocation": {
-            "type": ["null", "object"],
-            "additionalProperties": true,
-            "properties": {
-                "$uri": {
-                    "type": ["null", "string"]
-                }
-            }
+        "from_location": {
+            "type": ["null", "string"]
         },
-        "transferredOutBy": {
-            "type": ["null", "object"],
-            "additionalProperties": true,
-            "properties": {
-                "$uri": {
-                    "type": ["null", "string"]
-                }
-            }
+        "transferred_out_by": {
+            "type": ["null", "string"]
         },
-        "toLocation": {
-            "type": ["null", "object"],
-            "additionalProperties": true,
-            "properties": {
-                "$uri": {
-                    "type": ["null", "string"]
-                }
-            }
+        "to_location": {
+            "type": ["null", "string"]
         },
         "stocktransfer": {
-            "type": ["null", "object"],
-            "additionalProperties": true,
-            "properties": {
-                "$uri": {
-                    "type": ["null", "string"]
-                }
-            }
+            "type": ["null", "string"]
         },
         "status": {
             "type": ["null", "string"]

@@ -1,27 +1,15 @@
 {
     "type": ["null", "object"],
     "additionalProperties": true,
-    "properties": {               
+    "properties": {
         "archived": {
             "type": ["null", "boolean"]
         },
         "color": {
-            "type": ["null", "object"],
-            "additionalProperties": true,
-            "properties": {
-                "$uri": {
-                    "type": ["null", "string"]
-                }
-            }
+            "type": ["null", "string"]
         },
         "size": {
-            "type": ["null", "object"],
-            "additionalProperties": true,
-            "properties": {
-                "$uri": {
-                    "type": ["null", "string"]
-                }
-            }
+            "type": ["null", "string"]
         },
         "name": {
             "type": ["null", "string"]
@@ -29,44 +17,20 @@
         "upc": {
             "type": ["null", "string"]
         },
-        "coverMedia": {
-            "type": ["null", "object"],
-            "additionalProperties": true,
-            "properties": {
-                "$uri": {
-                    "type": ["null", "string"]
-                }
-            }
+        "cover_media": {
+            "type": ["null", "string"]
         },
         "style": {
-            "type": ["null", "object"],
-            "additionalProperties": true,
-            "properties": {
-                "$uri": {
-                    "type": ["null", "string"]
-                }
-            }
+            "type": ["null", "string"]
         },
         "id": {
             "type": ["null", "string"]
         },
-        "mediaFolder": {
-            "type": ["null", "object"],
-            "additionalProperties": true,
-            "properties": {
-                "$uri": {
-                    "type": ["null", "string"]
-                }
-            }
+        "media_folder": {
+            "type": ["null", "string"]
         },
         "brand": {
-            "type": ["null", "object"],
-            "additionalProperties": true,
-            "properties": {
-                "$uri": {
-                    "type": ["null", "string"]
-                }
-            }
+            "type": ["null", "string"]
         }
     }
 }

@@ -7,6 +7,7 @@ import sys
 from tap_x_y.streams import AVAILABLE_STREAMS
 from tap_x_y.client import XYClient
 from tap_x_y.catalog import generate_catalog
+from tap_x_y.transform import transform
 
 
 LOGGER = singer.get_logger()
@@ -38,30 +39,31 @@ def sync(client, config, catalog, state):
                                                              catalog=catalog,
                                                              state=state)
             LOGGER.info('Syncing stream: %s', catalog_entry.stream)
-
             stream.write_state()
-
             bookmark_date = stream.get_bookmark(stream.name,
                                                 config['start_date'])
             bookmark_dttm = strptime_to_utc(bookmark_date)
-
             stream_schema = catalog_entry.schema.to_dict()
             stream.write_schema()
             stream_metadata = metadata.to_map(catalog_entry.metadata)
             max_bookmark_value = None
+            
             with singer.metrics.job_timer(job_type=stream.name) as timer:
                 with singer.metrics.record_counter(
                         endpoint=stream.name) as counter:
                     for page in stream.sync(catalog_entry.metadata):
-                        for record in page:
-                            singer.write_record(
-                                catalog_entry.stream,
-                                transformer.transform(
-                                    record,
-                                    stream_schema,
-                                    stream_metadata,
-                                ))
-                            counter.increment()
+                        for records in page:
+                            transformed_records = transform(records)
+                            print("Transformed records {}".format(transformed_records))
+                            for transformed in transformed_records:
+                                singer.write_record(
+                                    catalog_entry.stream,
+                                    transformer.transform(
+                                        transformed,
+                                        stream_schema,
+                                        stream_metadata,
+                                    ))
+                                counter.increment()
                         stream.update_bookmark(stream.name,
                                                 max_bookmark_value)
                         stream.write_state()
@@ -71,9 +73,7 @@ def sync(client, config, catalog, state):
 
 
 def main():
-    parsed_args = singer.utils.parse_args(required_config_keys=[
-        'token'
-    ])
+    parsed_args = singer.utils.parse_args(required_config_keys=['token'])
     config = parsed_args.config
 
     client = XYClient(config)

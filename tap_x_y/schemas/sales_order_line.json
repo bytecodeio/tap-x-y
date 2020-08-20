@@ -2,17 +2,14 @@
     "type": ["null", "object"],
     "additionalProperties": true,
     "properties": {
-        "customer_full_name": {
+        "order": {
             "type": ["null", "string"]
         },
-        "charges_authorized_amount": {
-            "type": ["null", "integer"]
-        },
-        "charges_authorized_currency": {
+        "item": {
             "type": ["null", "string"]
-        },
-        "item_qty": {
-            "type": ["null", "integer"]
+        ,
+        "revenue_report_report_date": {
+            "type": ["null", "string"]
         },
         "charges_paid_amount": {
             "type": ["null", "integer"]
@@ -20,13 +17,13 @@
         "charges_paid_currency": {
             "type": ["null", "string"]
         },
-        "charges_due_amount": {
-            "type": ["null", "integer"]
-        },
-        "charges_due_currency": {
+        "color": {
             "type": ["null", "string"]
         },
-        "workflow_status": {
+        "item_category": {
+            "type": ["null", "string"]
+        },
+        "channel": {
             "type": ["null", "string"]
         },
         "charges_taxes_amount": {
@@ -35,46 +32,41 @@
         "charges_taxes_currency": {
             "type": ["null", "string"]
         },
-        "type": {
+        "channel_type": {
             "type": ["null", "string"]
         },
-        "fulfillment_status": {
+        "ship_to_line_city": {
             "type": ["null", "string"]
         },
-        "customer_phone": {
+        "division": {
             "type": ["null", "string"]
         },
-        "charges_net_amount_amount": {
-            "type": ["null", "integer"]
-        },
-        "charges_net_amount_currency": {
+        "item_sub_category": {
             "type": ["null", "string"]
         },
-        "charges_shipping_amount": {
-            "type": ["null", "integer"]
-        },
-        "charges_shipping_currency": {
-            "type": ["null", "string"]
-        },
-        "customer_email": {
-            "type": ["null", "string"]
-        },
-        "customer_last_name": {
-            "type": ["null", "string"]
-        },
-        "id": {
+        "sku": {
             "type": ["null", "string"]
         },
         "charges_currency": {
             "type": ["null", "string"]
+        }
         },
-        "payment_status": {
-            "type": ["null", "string"]
-        },
-        "charges_discount_amount": {
+        "quantity": {
             "type": ["null", "integer"]
         },
-        "charges_discount_currency": {
+        "delivery_type": {
+            "type": ["null", "string"]
+        },
+        "charges_net_amount_before_tax_amount": {
+            "type": ["null", "integer"]
+        },
+        "charges_net_amount_before_tax_currency": {
+            "type": ["null", "string"]
+        },
+        "upc": {
+            "type": ["null", "string"]
+        },
+        "collection": {
             "type": ["null", "string"]
         },
         "charges_promotion_amount": {
@@ -83,22 +75,19 @@
         "charges_promotion_currency": {
             "type": ["null", "string"]
         },
-        "charges_amount_amount": {
-            "type": ["null", "integer"]
-        },
-        "charges_amount_currency": {
+        "item_image": {
             "type": ["null", "string"]
         },
-        "customer_first_name": {
+        "point_of_sale": {
             "type": ["null", "string"]
         },
-        "channel_name": {
+        "size": {
             "type": ["null", "string"]
         },
-        "charges_charges_amount": {
-            "type": ["null", "integer"]
+        "fulfillment_location": {
+            "type": ["null", "string"]
         },
-        "charges_charges_currency": {
+        "style": {
             "type": ["null", "string"]
         },
         "order_date": {
@@ -108,6 +97,9 @@
             "type": ["null", "integer"]
         },
         "charges_total_currency": {
+            "type": ["null", "string"]
+        },
+        "customer": {
             "type": ["null", "string"]
         }
     }
