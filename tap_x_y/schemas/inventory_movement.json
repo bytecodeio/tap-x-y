@@ -3,7 +3,7 @@
     "additionalProperties": true,
     "properties": {
         "date": {
-            "type": ["null", "number"]
+            "type": ["null", "integer"]
         },
         "applied": {
             "type": ["null", "boolean"]

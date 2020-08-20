@@ -39,23 +39,22 @@ def sync(client, config, catalog, state):
                                                              catalog=catalog,
                                                              state=state)
             LOGGER.info('Syncing stream: %s', catalog_entry.stream)
-
             stream.write_state()
-
             bookmark_date = stream.get_bookmark(stream.name,
                                                 config['start_date'])
             bookmark_dttm = strptime_to_utc(bookmark_date)
-
             stream_schema = catalog_entry.schema.to_dict()
             stream.write_schema()
             stream_metadata = metadata.to_map(catalog_entry.metadata)
             max_bookmark_value = None
+            
             with singer.metrics.job_timer(job_type=stream.name) as timer:
                 with singer.metrics.record_counter(
                         endpoint=stream.name) as counter:
                     for page in stream.sync(catalog_entry.metadata):
                         for records in page:
                             transformed_records = transform(records)
+                            print("Transformed records {}".format(transformed_records))
                             for transformed in transformed_records:
                                 singer.write_record(
                                     catalog_entry.stream,
@@ -65,18 +64,16 @@ def sync(client, config, catalog, state):
                                         stream_metadata,
                                     ))
                                 counter.increment()
-                            stream.update_bookmark(stream.name,
-                                                    max_bookmark_value)
-                            stream.write_state()
+                        stream.update_bookmark(stream.name,
+                                                max_bookmark_value)
+                        stream.write_state()
 
         stream.write_state()
         LOGGER.info('Finished Sync..')
 
 
 def main():
-    parsed_args = singer.utils.parse_args(required_config_keys=[
-        'token'
-    ])
+    parsed_args = singer.utils.parse_args(required_config_keys=['token'])
     config = parsed_args.config
 
     client = XYClient(config)

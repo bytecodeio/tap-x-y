@@ -1,12 +1,23 @@
 import requests
 import singer
 import urllib
-
+import backoff
 
 
 LOGGER = singer.get_logger()  # noqa
-PAGE_SIZE = 100
+PAGE_SIZE = 500
 BASE_URL = "https://developer.xyretail.com"
+
+
+
+
+class Server5xxError(Exception):
+    pass
+
+
+class Server42xRateLimitError(Exception):
+    pass
+
 
 class XYClient:
 
@@ -27,7 +38,7 @@ class XYClient:
         total = 1
 
         args = {
-            'size': 100,
+            'size': PAGE_SIZE,
             'from': page_from
         }
         if filter_param:
@@ -35,19 +46,22 @@ class XYClient:
 
         next = self.build_url(BASE_URL, path, args)
 
-        data = []
         rows_in_response = 1
         while rows_in_response > 0:
             response = self.make_request(method='GET', url=next)
             total = response.get('total')
-            data.extend(response.get('rows'))
-            rows_in_response = len(response.get('rows'))
+            data = (response.get('rows'))
+            rows_in_response = len(data)
             page_from += PAGE_SIZE
-            args['from'] = page_from + 100
-            args['total'] = total
+            args['from'] = page_from
             next = self.build_url(BASE_URL, path, args)
-        return data
+            yield data
 
+    @backoff.on_exception(
+        backoff.expo,
+        (Server5xxError, ConnectionError, Server42xRateLimitError),
+        max_tries=5,
+        factor=2)
     def make_request(self,
                      method,
                      url=None,
@@ -66,7 +80,16 @@ class XYClient:
             response = self.session.get(url, headers=headers)
         else:
             raise Exception("Unsupported HTTP method")
+        
+        result = []
+        try:
+            result = response.json()
+        except ConnectionError:
+            raise ConnectionError
+
+        if response.status_code >= 500:
+            raise Server5xxError()
 
         LOGGER.info("Received code: {}".format(response.status_code))
 
-        return response.json()
+        return result

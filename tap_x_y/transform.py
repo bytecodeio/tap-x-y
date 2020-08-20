@@ -69,5 +69,4 @@ def denest(this_json):
 def transform(this_json):
     snake = convert_json(this_json)
     denested = [denest(nested) for nested in snake]
-    # denested = denest(snake)
     return convert_json(denested)

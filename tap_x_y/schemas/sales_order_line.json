@@ -1,0 +1,106 @@
+{
+    "type": ["null", "object"],
+    "additionalProperties": true,
+    "properties": {
+        "order": {
+            "type": ["null", "string"]
+        },
+        "item": {
+            "type": ["null", "string"]
+        ,
+        "revenue_report_report_date": {
+            "type": ["null", "string"]
+        },
+        "charges_paid_amount": {
+            "type": ["null", "integer"]
+        },
+        "charges_paid_currency": {
+            "type": ["null", "string"]
+        },
+        "color": {
+            "type": ["null", "string"]
+        },
+        "item_category": {
+            "type": ["null", "string"]
+        },
+        "channel": {
+            "type": ["null", "string"]
+        },
+        "charges_taxes_amount": {
+            "type": ["null", "integer"]
+        },
+        "charges_taxes_currency": {
+            "type": ["null", "string"]
+        },
+        "channel_type": {
+            "type": ["null", "string"]
+        },
+        "ship_to_line_city": {
+            "type": ["null", "string"]
+        },
+        "division": {
+            "type": ["null", "string"]
+        },
+        "item_sub_category": {
+            "type": ["null", "string"]
+        },
+        "sku": {
+            "type": ["null", "string"]
+        },
+        "charges_currency": {
+            "type": ["null", "string"]
+        }
+        },
+        "quantity": {
+            "type": ["null", "integer"]
+        },
+        "delivery_type": {
+            "type": ["null", "string"]
+        },
+        "charges_net_amount_before_tax_amount": {
+            "type": ["null", "integer"]
+        },
+        "charges_net_amount_before_tax_currency": {
+            "type": ["null", "string"]
+        },
+        "upc": {
+            "type": ["null", "string"]
+        },
+        "collection": {
+            "type": ["null", "string"]
+        },
+        "charges_promotion_amount": {
+            "type": ["null", "integer"]
+        },
+        "charges_promotion_currency": {
+            "type": ["null", "string"]
+        },
+        "item_image": {
+            "type": ["null", "string"]
+        },
+        "point_of_sale": {
+            "type": ["null", "string"]
+        },
+        "size": {
+            "type": ["null", "string"]
+        },
+        "fulfillment_location": {
+            "type": ["null", "string"]
+        },
+        "style": {
+            "type": ["null", "string"]
+        },
+        "order_date": {
+            "type": ["null", "integer"]
+        },
+        "charges_total_amount": {
+            "type": ["null", "integer"]
+        },
+        "charges_total_currency": {
+            "type": ["null", "string"]
+        },
+        "customer": {
+            "type": ["null", "string"]
+        }
+    }
+}

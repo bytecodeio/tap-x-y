@@ -3,7 +3,7 @@
     "additionalProperties": true,
     "properties": {
         "date": {
-            "type": ["null", "number"]
+            "type": ["null", "integer"]
         },
         "transfer_out": {
             "type": ["null", "integer"]
@@ -15,7 +15,7 @@
             "type": ["null", "integer"]
         },
         "transferred_out_on": {
-            "type": ["null", "number"]
+            "type": ["null", "integer"]
         },
         "from_location": {
             "type": ["null", "string"]
