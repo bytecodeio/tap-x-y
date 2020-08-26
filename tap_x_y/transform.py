@@ -1,16 +1,19 @@
 import humps
 import re
 import singer
-
+from singer.utils import strftime
+import uuid
 
 LOGGER = singer.get_logger()
 
 
-# Convert camelCase to snake_case and remove forward slashes
+# Convert camelCase to snake_case and remove forward slashes and dollar signs
 def convert(name):
-    regsub = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name)
-    unslash = re.sub('/', '_', regsub)
-    return re.sub('([a-z0-9])([A-Z])', r'\1_\2', unslash).lower()
+    transformed_key = name.replace('/', '_')
+    transformed_key = transformed_key.replace('$', '')
+    regsub = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', transformed_key)
+    transformed_key = re.sub('([a-z0-9])([A-Z])', r'\1_\2', regsub).lower()
+    return transformed_key
 
 
 # Convert keys in json array
@@ -53,20 +56,25 @@ def denest(this_json):
         for key, value in this_json.items():
             if isinstance(this_json[key], dict):
                 for child_key, child_value in this_json[key].items():
-                    if child_key == '$uri':
-                        new_key = key
-                    else:
-                        new_key = key + '_' + child_key
-                    new_json[new_key]= child_value
+                    new_key = key + '_' + child_key
+                    new_json[new_key] = child_value
             else:
                 new_json[key] = value
     elif isinstance(this_json, list):
         for item in this_json:
             denest(item)
-        
+
     return new_json
 
-def transform(this_json):
+
+def inject_guid_ts(data, extraction_ts):
+    for record in data:
+        record['__record_guid'] = uuid.uuid4()
+        record['__extraction_ts'] = strftime(extraction_ts)
+
+
+def transform(this_json, extraction_ts):
     snake = convert_json(this_json)
     denested = [denest(nested) for nested in snake]
-    return convert_json(denested)
+    inject_guid_ts(denested, extraction_ts)
+    return denested

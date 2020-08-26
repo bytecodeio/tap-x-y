@@ -2,6 +2,13 @@
     "type": ["null", "object"],
     "additionalProperties": true,
     "properties": {
+        "__record_guid": {
+            "type": ["null", "string"]
+        },
+        "__extraction_ts": {
+            "type": ["null", "string"],
+            "format": "date-time"
+        },
         "last_name": {
             "type": ["null", "string"]
         },
@@ -41,7 +48,7 @@
         "promotion_spend_charges_net_amount_currency": {
             "type": ["null", "string"]
         },
-        "last_channel": {
+        "last_channel_uri": {
             "type": ["null", "string"]
         },
         "phone": {

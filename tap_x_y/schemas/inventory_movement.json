@@ -2,6 +2,13 @@
     "type": ["null", "object"],
     "additionalProperties": true,
     "properties": {
+        "__record_guid": {
+            "type": ["null", "string"]
+        },
+        "__extraction_ts": {
+            "type": ["null", "string"],
+            "format": "date-time"
+        },
         "date": {
             "type": ["null", "integer"]
         },
@@ -68,7 +75,7 @@
         "order": {
             "type": ["null", "string"]
         },
-        "item": {
+        "item_uri": {
             "type": ["null", "string"]
         },
         "consigned": {

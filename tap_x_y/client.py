@@ -1,14 +1,15 @@
+import urllib
+from pprint import pprint
+
+import backoff
 import requests
 import singer
-import urllib
-import backoff
 
-
-LOGGER = singer.get_logger()  # noqa
-PAGE_SIZE = 500
+BACKOFF_MAX_TRIES = 2
+BACKOFF_FACTOR = 2
 BASE_URL = "https://developer.xyretail.com"
-
-
+LOGGER = singer.get_logger()  # noqa
+PAGE_SIZE = 100
 
 
 class Server5xxError(Exception):
@@ -19,8 +20,15 @@ class Server42xRateLimitError(Exception):
     pass
 
 
-class XYClient:
+def lookup_backoff_max_tries():
+    return BACKOFF_MAX_TRIES
 
+
+def lookup_backoff_factor():
+    return BACKOFF_FACTOR
+
+
+class XYClient:
     def __init__(self, config):
         self.config = config
         self.session = requests.Session()
@@ -37,10 +45,7 @@ class XYClient:
         page_from = 0
         total = 1
 
-        args = {
-            'size': PAGE_SIZE,
-            'from': page_from
-        }
+        args = {'size': PAGE_SIZE, 'from': page_from}
         if filter_param:
             args = {**args, **filter_param}
 
@@ -60,8 +65,8 @@ class XYClient:
     @backoff.on_exception(
         backoff.expo,
         (Server5xxError, ConnectionError, Server42xRateLimitError),
-        max_tries=5,
-        factor=2)
+        max_tries=lookup_backoff_max_tries,
+        factor=lookup_backoff_factor)
     def make_request(self,
                      method,
                      url=None,
@@ -74,22 +79,27 @@ class XYClient:
         if self.config.get('user_agent'):
             headers['User-Agent'] = self.config['user_agent']
 
-        if method == "GET":
-            LOGGER.info(
-                f"Making {method} request to {url} with params: {params}")
-            response = self.session.get(url, headers=headers)
-        else:
-            raise Exception("Unsupported HTTP method")
-        
+        try:
+            if method == "GET":
+                LOGGER.info(
+                    f"Making {method} request to {url} with params: {params}")
+                response = self.session.get(url, headers=headers)
+            else:
+                raise Exception("Unsupported HTTP method")
+        except ConnectionError as ex:
+            LOGGER.info("Retrying on connection error {}".format(ex))
+            raise ConnectionError
+
+        LOGGER.info("Received code: {}".format(response.status_code))
+
+        if response.status_code >= 500:
+            LOGGER.info(f"")
+            raise Server5xxError()
+
         result = []
         try:
             result = response.json()
         except ConnectionError:
-            raise ConnectionError
-
-        if response.status_code >= 500:
-            raise Server5xxError()
-
-        LOGGER.info("Received code: {}".format(response.status_code))
+            pprint("Response json parse failed: {}".format(response))
 
         return result

@@ -10,6 +10,7 @@ from singer.utils import strptime_to_utc
 LOGGER = singer.get_logger()
 DEFAULT_ATTRIBUTION_WINDOW = 90
 
+
 class Base:
     # Todo: add lookback as attribution window
     def __init__(self, client=None, config=None, catalog=None, state=None):
@@ -19,7 +20,7 @@ class Base:
         self.state = state
         self.top = 50
         self.date_window_size = 1
-        self.size = 1000
+        self.size = 100
 
     @staticmethod
     def get_abs_path(path):
@@ -74,12 +75,9 @@ class Base:
     def get_resources(self):
         return self.client.get_resources(self.get_endpoint())
 
-
-
     def remove_hours_local(self, dttm):
         new_dttm = dttm.replace(hour=0, minute=0, second=0, microsecond=0)
         return new_dttm
-
 
     # Round time based to day
     def round_times(self, start=None, end=None):
@@ -89,7 +87,6 @@ class Base:
         start_rounded = self.remove_hours_local(start) - timedelta(days=1)
         end_rounded = self.remove_hours_local(end) + timedelta(days=1)
         return start_rounded, end_rounded
-
 
     # Determine absolute start and end times w/ attribution_window constraint
     # abs_start/end and window_start/end must be rounded to nearest hour or day (granularity)
@@ -102,8 +99,7 @@ class Base:
             start = now_dttm - timedelta(88)
             LOGGER.info(
                 (f'Start date with attribution window exceeds max API history.'
-                f'Setting start date to {start}')
-            )
+                 f'Setting start date to {start}'))
         else:
             start = last_dttm
 
@@ -113,21 +109,23 @@ class Base:
     def sync(self, mdata):
         schema = self.load_schema()
 
+        # Bookmark datetimes
+        last_datetime = str(
+            self.get_bookmark(self.name,
+                                self.config.get('start_date')))
+        last_dttm = strptime_to_utc(last_datetime)
+
         with singer.metrics.job_timer(job_type=self.name) as timer:
             with singer.metrics.record_counter(endpoint=self.name) as counter:
 
                 if self.replication_key:
 
-                    # Bookmark datetimes
-                    last_datetime = str(self.get_bookmark(
-                        self.name, self.config.get('start_date')))
-                    last_dttm = strptime_to_utc(last_datetime)
-
                     # Get absolute start and end times
                     attribution_window = int(
-                        self.config.get("attribution_window", DEFAULT_ATTRIBUTION_WINDOW))
-                    abs_start, abs_end = self.get_absolute_start_end_time(last_dttm,
-                                                                    attribution_window)
+                        self.config.get("attribution_window",
+                                        DEFAULT_ATTRIBUTION_WINDOW))
+                    abs_start, abs_end = self.get_absolute_start_end_time(
+                        last_dttm, attribution_window)
 
                     window_start = abs_start
 
@@ -135,20 +133,21 @@ class Base:
                         result = self.get_resources_by_date(window_start)
                         window_start = window_start + timedelta(
                             days=self.date_window_size)
-                        yield result
-                
+                        yield result, window_start
+                    yield [], window_start
+
                 else:
-                    yield self.get_resources()
+                    yield self.get_resources(), last_dttm
 
 
 class CommerceSalesOrderline(Base):
     name = 'sales_order_line'
-    key_properties = ['order', 'item']
+    key_properties = ['__record_guid']
     replication_method = 'INCREMENTAL'
-    replication_key = 'order_date'
+    replication_key = '__record_guid'
     bookmark_field = 'orderDate'
     endpoint = 'commerce.salesorderline-{sales_order_line}'
-    valid_replication_keys = ['order_date']
+    valid_replication_keys = ['__record_guid']
     uri_root = 'commerce'
     uri_root_path = 'store'
 
@@ -159,12 +158,12 @@ class CommerceSalesOrderline(Base):
 
 class Customer(Base):
     name = 'customer'
-    key_properties = ['email']
+    key_properties = ['__record_guid']
     replication_method = 'INCREMENTAL'
-    replication_key = 'last_txn_date'
+    replication_key = '__record_guid'
     bookmark_field = 'lastTxnDate'
     endpoint = '{customer}'
-    valid_replication_keys = ['last_txn_date']
+    valid_replication_keys = ['__record_guid']
 
     def get_endpoint(self):
         return self.endpoint.format(customer=self.config.get('customer'))
@@ -172,11 +171,12 @@ class Customer(Base):
 
 class Inventory(Base):
     name = 'inventory'
-    key_properties = ['item']
+    key_properties = ['__record_guid']
     replication_method = 'FULL_TABLE'
     endpoint = 'commerce.inventory-{inventory}'
     replication_key = None
-    valid_replication_keys = ['']
+    valid_replication_keys = ['__record_guid']
+
     # Todo: add extract date field
     def get_endpoint(self):
         return self.endpoint.format(inventory=self.config.get('inventory'))
@@ -184,12 +184,12 @@ class Inventory(Base):
 
 class Invoice(Base):
     name = 'invoice'
-    key_properties = ['id']
+    key_properties = ['__record_guid']
     replication_method = 'INCREMENTAL'
-    replication_key = 'order_date'
+    replication_key = '__record_guid'
     bookmark_field = 'orderDate'
     endpoint = '{invoice}'
-    valid_replication_keys = ['order_date']
+    valid_replication_keys = ['__record_guid']
 
     def get_endpoint(self):
         return self.endpoint.format(invoice=self.config.get('invoice'))
@@ -197,20 +197,21 @@ class Invoice(Base):
 
 class InventoryMovement(Base):
     name = 'inventory_movement'
-    key_properties = ['item', 'record_type', 'date']
+    key_properties = ['__record_guid']
     replication_method = 'INCREMENTAL'
-    replication_key = 'date'
+    replication_key = '__record_guid'
     bookmark_field = 'date'
     endpoint = '{inventory_movement}'
-    valid_replication_keys = ['date']
+    valid_replication_keys = ['__record_guid']
 
     def get_endpoint(self):
         return self.endpoint.format(
             inventory_movement=self.config.get('inventory_movement'))
 
+
 class Item(Base):
     name = 'item'
-    key_properties = ['id']
+    key_properties = ['__record_guid']
     replication_method = 'FULL_TABLE'
     endpoint = 'commerce.item-{item}'
     replication_key = None
@@ -222,12 +223,12 @@ class Item(Base):
 
 class StockTransfer(Base):
     name = 'stock_transfer'
-    key_properties = ['item', 'stocktransfer']
+    key_properties = ['__record_guid']
     replication_method = 'INCREMENTAL'
-    replication_key = 'date'
+    replication_key = '__record_guid'
     bookmark_field = 'date'
     endpoint = 'commerce.stocktransferline-{stock_transfer}'
-    valid_replication_keys = ['date']
+    valid_replication_keys = ['__record_guid']
 
     def get_endpoint(self):
         return self.endpoint.format(
@@ -235,7 +236,7 @@ class StockTransfer(Base):
 
 
 AVAILABLE_STREAMS = {
-    "commerce_salesorderline": CommerceSalesOrderline,
+    "sales_order_line": CommerceSalesOrderline,
     "customer": Customer,
     "inventory": Inventory,
     "invoice": Invoice,

@@ -1,8 +1,24 @@
 {
     "type": ["null", "object"],
     "additionalProperties": true,
-    "properties": {        
-        "item": {
+    "properties": {    
+        "__record_guid": {
+            "type": ["null", "string"]
+        },
+        "__extraction_ts": {
+            "type": ["null", "string"],
+            "format": "date-time"
+        },    
+        "item_uri": {
+            "type": ["null", "string"]
+        },
+        "on_hand": {
+            "type": ["null", "string"]
+        },
+        "available": {
+            "type": ["null", "integer"]
+        },
+        "store_uri": {
             "type": ["null", "string"]
         },
         "available_price_amount": {
@@ -16,9 +32,6 @@
         },
         "consigned_msrp_currency": {
             "type": ["null", "string"]
-        },
-        "available": {
-            "type": ["null", "integer"]
         },
         "held_msrp_amount": {
             "type": ["null", "integer"]
@@ -39,9 +52,6 @@
             "type": ["null", "integer"]
         },
         "on_hand_price_currency": {
-            "type": ["null", "string"]
-        },
-        "on_hand": {
             "type": ["null", "string"]
         },
         "consigned_price_amount": {

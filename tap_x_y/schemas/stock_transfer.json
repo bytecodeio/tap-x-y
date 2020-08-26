@@ -2,13 +2,20 @@
     "type": ["null", "object"],
     "additionalProperties": true,
     "properties": {
+        "__record_guid": {
+            "type": ["null", "string"]
+        },
+        "__extraction_ts": {
+            "type": ["null", "string"],
+            "format": "date-time"
+        },
         "date": {
             "type": ["null", "integer"]
         },
         "transfer_out": {
             "type": ["null", "integer"]
         },
-        "item": {
+        "item_uri": {
             "type": ["null", "string"]
         },
         "quantity": {
@@ -17,16 +24,16 @@
         "transferred_out_on": {
             "type": ["null", "integer"]
         },
-        "from_location": {
+        "from_location_uri": {
             "type": ["null", "string"]
         },
-        "transferred_out_by": {
+        "transferred_out_by_uri": {
             "type": ["null", "string"]
         },
-        "to_location": {
+        "to_location_uri": {
             "type": ["null", "string"]
         },
-        "stocktransfer": {
+        "stocktransfer_uri": {
             "type": ["null", "string"]
         },
         "status": {
