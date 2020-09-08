@@ -5,7 +5,7 @@ import backoff
 import requests
 import singer
 
-BACKOFF_MAX_TRIES = 2
+BACKOFF_MAX_TRIES = 10
 BACKOFF_FACTOR = 2
 BASE_URL = "https://developer.xyretail.com"
 LOGGER = singer.get_logger()  # noqa

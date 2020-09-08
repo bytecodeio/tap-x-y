@@ -1,27 +1,31 @@
 # tap-x-y
 
+## Replication
+
+A number of endpoints do not expose a unique ID or a convenient 
+
 ## Streams
 
 - sales_order_line
-    - Primary keys: order, item
+    - Primary keys: __record_guid (Generated UUID per extraction execution)
     - Replication strategy: Incremental (query filtered)
       - Date Windows: Lookback window for capturing recent changes to data
       - Bookmark query parameter: orderDate
       - Bookmark: orderDate
-    - Transformation: objects de-nested, camel to snake case, `/` to underscore
+    - Transformation: objects de-nested, camel to snake case, `/` to underscore, remove `$` 
 
 - customer
-    - Primary keys:  email
+    - Primary keys:  __record_guid (Generated UUID per extraction execution)
     - Replication strategy: Incremental (query filtered)
       - Date Windows: Lookback window for capturing recent changes to data
       - Bookmark query parameter: lastTxnDate
       - Bookmark: lastTxnDate
-    - Transformation: objects de-nested, camel to snake case, `/` to underscore
+    - Transformation: objects de-nested, camel to snake case, `/` to underscore, remove `$` 
 
 - inventory
-    - Primary keys: item
+    - Primary keys: item, store
     - Replication strategy: Full table
-    - Transformation: objects de-nested, camel to snake case, `/` to underscore
+    - Transformation: objects de-nested, camel to snake case, `/` to underscore, remove `$` 
 
 - invoice
     - Primary keys: id
@@ -29,28 +33,28 @@
       - Date Windows: Lookback windows for capturing recent changes to data
       - Bookmark query parameter: orderDate
       - Bookmark: orderDate
-    - Transformation: objects de-nested, camel to snake case, `/` to underscore
+    - Transformation: objects de-nested, camel to snake case, `/` to underscore, remove `$` 
 
 - inventory_movement
-    - Primary keys: item, record_type, date
+    - Primary keys: __record_guid (Generated UUID per extraction execution)
     - Replication strategy: Incremental (query filtered)
       - Date Windows: Lookback windows for capturing recent changes to data
       - Bookmark query parameter: date
       - Bookmark: date
-    - Transformation: objects de-nested, camel to snake case, `/` to underscore
+    - Transformation: objects de-nested, camel to snake case, `/` to underscore, remove `$` 
 
 - item
     - Primary keys: id
     - Replication strategy: FULL_TABLE'
-    - Transformation: objects de-nested, camel to snake case, `/` to underscore
+    - Transformation: objects de-nested, camel to snake case, `/` to underscore, remove `$` 
 
 - stock_transfer
-    - Primary keys: item, stocktransfer
+    - Primary keys: __record_guid (Generated UUID per extraction execution)
     - Replication strategy: Incremental (query filtered)
       - Date Windows: Lookback windows for capturing recent changes to data
       - Bookmark query parameter: date
       - Bookmark: date
-    - Transformation: objects de-nested, camel to snake case, `/` to underscore
+    - Transformation: objects de-nested, camel to snake case, `/` to underscore, remove `$` 
 
 ### Denesting and Transforms
 

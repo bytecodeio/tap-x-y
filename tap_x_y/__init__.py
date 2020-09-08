@@ -57,16 +57,21 @@ def sync(client, config, catalog, state):
                             catalog_entry.metadata):
                         for records in page:
                             transformed_records = transform(
-                                records, extraction_ts)
+                                records, extraction_ts, stream.key_properties)
                             for transformed in transformed_records:
-                                singer.write_record(
-                                    catalog_entry.stream,
-                                    transformer.transform(
-                                        transformed,
-                                        stream_schema,
-                                        stream_metadata,
-                                    ))
-                                counter.increment()
+                                if all(key in transformed for key in stream.key_properties):
+                                    singer.write_record(
+                                        catalog_entry.stream,
+                                        transformer.transform(
+                                            transformed,
+                                            stream_schema,
+                                            stream_metadata,
+                                        ))
+                                    counter.increment()
+                                else:
+                                    LOGGER.info(f"Keys {stream.key_properties} not present")
+                        # Until last modified bookmark fields avaialable will use what are avaialable
+                        # with a lookback window
                         if max_bookmark_dttm > bookmark_dttm:
                             date = strftime(max_bookmark_dttm)
                             stream.update_bookmark(

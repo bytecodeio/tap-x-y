@@ -1,14 +1,7 @@
 {
     "type": ["null", "object"],
     "additionalProperties": true,
-    "properties": {    
-        "__record_guid": {
-            "type": ["null", "string"]
-        },
-        "__extraction_ts": {
-            "type": ["null", "string"],
-            "format": "date-time"
-        },    
+    "properties": {      
         "item_uri": {
             "type": ["null", "string"]
         },
@@ -37,9 +30,6 @@
             "type": ["null", "integer"]
         },
         "held_msrp_currency": {
-            "type": ["null", "string"]
-        },
-        "store": {
             "type": ["null", "string"]
         },
         "on_hand_msrp_amount": {
