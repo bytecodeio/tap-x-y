@@ -2,6 +2,12 @@
     "type": ["null", "object"],
     "additionalProperties": true,
     "properties": {
+        "id": {
+            "type": ["null", "string"]
+        },
+        "last_modified": {
+            "type": ["null", "integer"]
+        },
         "archived": {
             "type": ["null", "boolean"]
         },
@@ -21,9 +27,6 @@
             "type": ["null", "string"]
         },
         "style_uri": {
-            "type": ["null", "string"]
-        },
-        "id": {
             "type": ["null", "string"]
         },
         "media_folder": {

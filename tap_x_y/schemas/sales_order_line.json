@@ -2,12 +2,18 @@
     "type": ["null", "object"],
     "additionalProperties": true,
     "properties": {
+        "id": {
+            "type": ["null", "string"]
+        },
+        "last_modified": {
+            "type": ["null", "integer"]
+        },
         "order_uri": {
             "type": ["null", "string"]
         },
         "item_uri": {
             "type": ["null", "string"]
-        ,
+        },
         "revenue_report_report_date": {
             "type": ["null", "string"]
         },
@@ -49,7 +55,6 @@
         },
         "charges_currency": {
             "type": ["null", "string"]
-        }
         },
         "quantity": {
             "type": ["null", "integer"]

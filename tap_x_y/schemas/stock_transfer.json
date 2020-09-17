@@ -2,6 +2,12 @@
     "type": ["null", "object"],
     "additionalProperties": true,
     "properties": {
+        "id": {
+            "type": ["null", "string"]
+        },
+        "last_modified": {
+            "type": ["null", "integer"]
+        },
         "date": {
             "type": ["null", "integer"]
         },

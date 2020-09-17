@@ -2,6 +2,12 @@
     "type": ["null", "object"],
     "additionalProperties": true,
     "properties": {
+        "id": {
+            "type": ["null", "string"]
+        },
+        "last_modified": {
+            "type": ["null", "integer"]
+        },
         "customer_full_name": {
             "type": ["null", "string"]
         },
@@ -60,9 +66,6 @@
             "type": ["null", "string"]
         },
         "customer_last_name": {
-            "type": ["null", "string"]
-        },
-        "id": {
             "type": ["null", "string"]
         },
         "charges_currency": {

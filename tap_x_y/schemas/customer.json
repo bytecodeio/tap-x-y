@@ -2,12 +2,11 @@
     "type": ["null", "object"],
     "additionalProperties": true,
     "properties": {
-        "__record_guid": {
+        "id": {
             "type": ["null", "string"]
         },
-        "__extraction_ts": {
-            "type": ["null", "string"],
-            "format": "date-time"
+        "last_modified": {
+            "type": ["null", "integer"]
         },
         "last_name": {
             "type": ["null", "string"]

@@ -67,15 +67,7 @@ def denest(this_json):
     return new_json
 
 
-def inject_guid_ts(data, extraction_ts, key_properties):
-    for record in data:
-        if '__record_guid' in key_properties:
-            record['__record_guid'] = uuid.uuid4()
-            record['__extraction_ts'] = strftime(extraction_ts)
-
-
 def transform(this_json, extraction_ts, key_properties):
     snake = convert_json(this_json)
     denested = [denest(nested) for nested in snake]
-    inject_guid_ts(denested, extraction_ts, key_properties)
     return denested

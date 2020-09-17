@@ -8,6 +8,8 @@ from tap_x_y.streams import AVAILABLE_STREAMS
 from tap_x_y.client import XYClient
 from tap_x_y.catalog import generate_catalog
 from tap_x_y.transform import transform
+import datetime
+from _datetime import timezone
 
 LOGGER = singer.get_logger()
 
@@ -41,6 +43,7 @@ def sync(client, config, catalog, state):
                                                              catalog=catalog,
                                                              state=state)
             LOGGER.info('Syncing stream: %s', catalog_entry.stream)
+            stream.update_currently_syncing()
             stream.write_state()
             bookmark_date = stream.get_bookmark(stream.name,
                                                 config['start_date'])
@@ -49,36 +52,32 @@ def sync(client, config, catalog, state):
             stream.write_schema()
             stream_metadata = metadata.to_map(catalog_entry.metadata)
             max_bookmark_value = None
+            new_bookmark = bookmark_dttm
 
             with singer.metrics.job_timer(job_type=stream.name) as timer:
                 with singer.metrics.record_counter(
                         endpoint=stream.name) as counter:
-                    for page, max_bookmark_dttm in stream.sync(
-                            catalog_entry.metadata):
-                        for records in page:
-                            transformed_records = transform(
-                                records, extraction_ts, stream.key_properties)
-                            for transformed in transformed_records:
-                                if all(key in transformed for key in stream.key_properties):
-                                    singer.write_record(
-                                        catalog_entry.stream,
-                                        transformer.transform(
-                                            transformed,
-                                            stream_schema,
-                                            stream_metadata,
-                                        ))
-                                    counter.increment()
-                                else:
-                                    LOGGER.info(f"Keys {stream.key_properties} not present")
-                        # Until last modified bookmark fields avaialable will use what are avaialable
-                        # with a lookback window
-                        if max_bookmark_dttm > bookmark_dttm:
-                            date = strftime(max_bookmark_dttm)
-                            stream.update_bookmark(
-                                stream.name, strftime(max_bookmark_dttm))
-                            stream.write_state()
+                    for page in stream.sync(
+                            catalog_entry.metadata, bookmark_dttm):
+                        transformed_records = transform(
+                            page, extraction_ts, stream.key_properties)
+                        for transformed in transformed_records:                                
+                            record_bookmark = datetime.datetime.fromtimestamp(transformed.get('last_modified')/1000.0, tz=timezone.utc)
+                            new_bookmark = max(new_bookmark, record_bookmark)
+                            
+                            if record_bookmark > bookmark_dttm:
+                                singer.write_record(
+                                    catalog_entry.stream,
+                                    transformer.transform(
+                                        transformed,
+                                        stream_schema,
+                                        stream_metadata,
+                                    ))
+                                counter.increment()
 
-        stream.write_state()
+                    stream.update_bookmark(stream.name, strftime(new_bookmark))
+                    stream.write_state()
+
         LOGGER.info('Finished Sync..')
 
 

@@ -1,7 +1,13 @@
 {
     "type": ["null", "object"],
     "additionalProperties": true,
-    "properties": {      
+    "properties": {   
+        "id": {
+            "type": ["null", "string"]
+        },
+        "last_modified": {
+            "type": ["null", "integer"]
+        },   
         "item_uri": {
             "type": ["null", "string"]
         },

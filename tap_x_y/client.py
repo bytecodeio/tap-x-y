@@ -4,6 +4,7 @@ from pprint import pprint
 import backoff
 import requests
 import singer
+from urllib3.exceptions import ProtocolError
 
 BACKOFF_MAX_TRIES = 10
 BACKOFF_FACTOR = 2
@@ -34,33 +35,34 @@ class XYClient:
         self.session = requests.Session()
         self.access_token = config.get('token')
 
-    def build_url(self, baseurl, path, args_dict):
+    def build_url(self, baseurl, path, space_uri, api_user, args_dict):
         # Returns a list in the structure of urlparse.ParseResult
+        # https://developer.xyretail.com/_g/spaces-identity.toddsnyder/worksheet/sheetTemplate/commerce.salesorderline-9518699780000999/
+        # customV4/aaron.pugliese@bytecode.io
         url_parts = list(urllib.parse.urlparse(baseurl))
-        url_parts[2] = '_g' + '/' + path
+        url_parts[2] = '_g/' + space_uri +'/worksheet/sheetTemplate/' + path + '/customV4/' + api_user
         url_parts[4] = urllib.parse.urlencode(args_dict)
         return urllib.parse.urlunparse(url_parts)
 
-    def get_resources(self, path, filter_param=None):
+    def get_resources(self, path, space_uri, api_user, filter_param=None):
         page_from = 0
-        total = 1
 
         args = {'size': PAGE_SIZE, 'from': page_from}
         if filter_param:
             args = {**args, **filter_param}
 
-        next = self.build_url(BASE_URL, path, args)
+        next = self.build_url(BASE_URL, path, space_uri, api_user, args)
 
         rows_in_response = 1
         while rows_in_response > 0:
             response = self.make_request(method='GET', url=next)
-            total = response.get('total')
             data = (response.get('rows'))
             rows_in_response = len(data)
             page_from += PAGE_SIZE
             args['from'] = page_from
-            next = self.build_url(BASE_URL, path, args)
+            next = self.build_url(BASE_URL, path, space_uri, api_user, args)
             yield data
+        yield []
 
     @backoff.on_exception(
         backoff.expo,
@@ -86,7 +88,7 @@ class XYClient:
                 response = self.session.get(url, headers=headers)
             else:
                 raise Exception("Unsupported HTTP method")
-        except ConnectionError as ex:
+        except (ConnectionError, ProtocolError) as ex:
             LOGGER.info("Retrying on connection error {}".format(ex))
             raise ConnectionError
 
