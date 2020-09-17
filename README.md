@@ -5,7 +5,6 @@
 - sales_order_line
     - Primary keys: id
     - Replication strategy: Incremental (query filtered)
-      - Date Windows: Lookback windows for capturing recent changes to data
       - Bookmark query parameter: lastModified
       - Bookmark: lastModified
     - Transformation: objects de-nested, camel to snake case, `/` to underscore, remove `$` 
@@ -13,7 +12,6 @@
 - customer
     - Primary keys: id
     - Replication strategy: Incremental (query filtered)
-      - Date Windows: Lookback windows for capturing recent changes to data
       - Bookmark query parameter: lastModified
       - Bookmark: lastModified
     - Transformation: objects de-nested, camel to snake case, `/` to underscore, remove `$` 
@@ -21,7 +19,6 @@
 - inventory
     - Primary keys: id
     - Replication strategy: Incremental (query filtered)
-      - Date Windows: Lookback windows for capturing recent changes to data
       - Bookmark query parameter: lastModified
       - Bookmark: lastModified
     - Transformation: objects de-nested, camel to snake case, `/` to underscore, remove `$` 
@@ -29,7 +26,6 @@
 - invoice
     - Primary keys: id
     - Replication strategy: Incremental (query filtered)
-      - Date Windows: Lookback windows for capturing recent changes to data
       - Bookmark query parameter: lastModified
       - Bookmark: lastModified
     - Transformation: objects de-nested, camel to snake case, `/` to underscore, remove `$` 
@@ -37,7 +33,6 @@
 - inventory_movement
     - Primary keys: id
     - Replication strategy: Incremental (query filtered)
-      - Date Windows: Lookback windows for capturing recent changes to data
       - Bookmark query parameter: lastModified
       - Bookmark: lastModified
     - Transformation: objects de-nested, camel to snake case, `/` to underscore, remove `$` 
@@ -45,7 +40,6 @@
 - item
     - Primary keys: id
     - Replication strategy: Incremental (query filtered)
-      - Date Windows: Lookback windows for capturing recent changes to data
       - Bookmark query parameter: lastModified
       - Bookmark: lastModified
     - Transformation: objects de-nested, camel to snake case, `/` to underscore, remove `$` 
@@ -53,7 +47,6 @@
 - stock_transfer
     - Primary keys: id
     - Replication strategy: Incremental (query filtered)
-      - Date Windows: Lookback windows for capturing recent changes to data
       - Bookmark query parameter: lastModified
       - Bookmark: lastModified
     - Transformation: objects de-nested, camel to snake case, `/` to underscore, remove `$` 
