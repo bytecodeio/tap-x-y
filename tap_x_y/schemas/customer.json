@@ -2,6 +2,12 @@
     "type": ["null", "object"],
     "additionalProperties": true,
     "properties": {
+        "id": {
+            "type": ["null", "string"]
+        },
+        "last_modified": {
+            "type": ["null", "integer"]
+        },
         "last_name": {
             "type": ["null", "string"]
         },
@@ -41,7 +47,7 @@
         "promotion_spend_charges_net_amount_currency": {
             "type": ["null", "string"]
         },
-        "last_channel": {
+        "last_channel_uri": {
             "type": ["null", "string"]
         },
         "phone": {

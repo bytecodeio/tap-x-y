@@ -3,54 +3,53 @@
 ## Streams
 
 - sales_order_line
-    - Primary keys: order, item
+    - Primary keys: id
     - Replication strategy: Incremental (query filtered)
-      - Date Windows: Lookback window for capturing recent changes to data
-      - Bookmark query parameter: orderDate
-      - Bookmark: orderDate
-    - Transformation: objects de-nested, camel to snake case, `/` to underscore
+      - Bookmark query parameter: lastModified
+      - Bookmark: lastModified
+    - Transformation: objects de-nested, camel to snake case, `/` to underscore, remove `$` 
 
 - customer
-    - Primary keys:  email
+    - Primary keys: id
     - Replication strategy: Incremental (query filtered)
-      - Date Windows: Lookback window for capturing recent changes to data
-      - Bookmark query parameter: lastTxnDate
-      - Bookmark: lastTxnDate
-    - Transformation: objects de-nested, camel to snake case, `/` to underscore
+      - Bookmark query parameter: lastModified
+      - Bookmark: lastModified
+    - Transformation: objects de-nested, camel to snake case, `/` to underscore, remove `$` 
 
 - inventory
-    - Primary keys: item
-    - Replication strategy: Full table
-    - Transformation: objects de-nested, camel to snake case, `/` to underscore
+    - Primary keys: id
+    - Replication strategy: Incremental (query filtered)
+      - Bookmark query parameter: lastModified
+      - Bookmark: lastModified
+    - Transformation: objects de-nested, camel to snake case, `/` to underscore, remove `$` 
 
 - invoice
     - Primary keys: id
     - Replication strategy: Incremental (query filtered)
-      - Date Windows: Lookback windows for capturing recent changes to data
-      - Bookmark query parameter: orderDate
-      - Bookmark: orderDate
-    - Transformation: objects de-nested, camel to snake case, `/` to underscore
+      - Bookmark query parameter: lastModified
+      - Bookmark: lastModified
+    - Transformation: objects de-nested, camel to snake case, `/` to underscore, remove `$` 
 
 - inventory_movement
-    - Primary keys: item, record_type, date
+    - Primary keys: id
     - Replication strategy: Incremental (query filtered)
-      - Date Windows: Lookback windows for capturing recent changes to data
-      - Bookmark query parameter: date
-      - Bookmark: date
-    - Transformation: objects de-nested, camel to snake case, `/` to underscore
+      - Bookmark query parameter: lastModified
+      - Bookmark: lastModified
+    - Transformation: objects de-nested, camel to snake case, `/` to underscore, remove `$` 
 
 - item
     - Primary keys: id
-    - Replication strategy: FULL_TABLE'
-    - Transformation: objects de-nested, camel to snake case, `/` to underscore
+    - Replication strategy: Incremental (query filtered)
+      - Bookmark query parameter: lastModified
+      - Bookmark: lastModified
+    - Transformation: objects de-nested, camel to snake case, `/` to underscore, remove `$` 
 
 - stock_transfer
-    - Primary keys: item, stocktransfer
+    - Primary keys: id
     - Replication strategy: Incremental (query filtered)
-      - Date Windows: Lookback windows for capturing recent changes to data
-      - Bookmark query parameter: date
-      - Bookmark: date
-    - Transformation: objects de-nested, camel to snake case, `/` to underscore
+      - Bookmark query parameter: lastModified
+      - Bookmark: lastModified
+    - Transformation: objects de-nested, camel to snake case, `/` to underscore, remove `$` 
 
 ### Denesting and Transforms
 

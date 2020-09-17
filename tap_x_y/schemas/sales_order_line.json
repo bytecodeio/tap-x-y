@@ -2,12 +2,18 @@
     "type": ["null", "object"],
     "additionalProperties": true,
     "properties": {
-        "order": {
+        "id": {
             "type": ["null", "string"]
         },
-        "item": {
+        "last_modified": {
+            "type": ["null", "integer"]
+        },
+        "order_uri": {
             "type": ["null", "string"]
-        ,
+        },
+        "item_uri": {
+            "type": ["null", "string"]
+        },
         "revenue_report_report_date": {
             "type": ["null", "string"]
         },
@@ -17,13 +23,13 @@
         "charges_paid_currency": {
             "type": ["null", "string"]
         },
-        "color": {
+        "color_uri": {
             "type": ["null", "string"]
         },
-        "item_category": {
+        "item_category_uri": {
             "type": ["null", "string"]
         },
-        "channel": {
+        "channel_uri": {
             "type": ["null", "string"]
         },
         "charges_taxes_amount": {
@@ -38,10 +44,10 @@
         "ship_to_line_city": {
             "type": ["null", "string"]
         },
-        "division": {
+        "division_uri": {
             "type": ["null", "string"]
         },
-        "item_sub_category": {
+        "item_sub_category_uri": {
             "type": ["null", "string"]
         },
         "sku": {
@@ -49,7 +55,6 @@
         },
         "charges_currency": {
             "type": ["null", "string"]
-        }
         },
         "quantity": {
             "type": ["null", "integer"]
@@ -66,7 +71,7 @@
         "upc": {
             "type": ["null", "string"]
         },
-        "collection": {
+        "collection_uri": {
             "type": ["null", "string"]
         },
         "charges_promotion_amount": {
@@ -75,19 +80,19 @@
         "charges_promotion_currency": {
             "type": ["null", "string"]
         },
-        "item_image": {
+        "item_image_uri": {
             "type": ["null", "string"]
         },
         "point_of_sale": {
             "type": ["null", "string"]
         },
-        "size": {
+        "size_uri": {
             "type": ["null", "string"]
         },
         "fulfillment_location": {
             "type": ["null", "string"]
         },
-        "style": {
+        "style_uri": {
             "type": ["null", "string"]
         },
         "order_date": {
@@ -99,7 +104,16 @@
         "charges_total_currency": {
             "type": ["null", "string"]
         },
-        "customer": {
+        "customer_uri": {
+            "type": ["null", "string"]
+        },
+        "sales_associate_uri": {
+            "type": ["null", "string"]
+        },
+        "department_uri": {
+            "type": ["null", "string"]
+        },
+        "brand_uri": {
             "type": ["null", "string"]
         }
     }
